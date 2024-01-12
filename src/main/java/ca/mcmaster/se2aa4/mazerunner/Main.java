@@ -16,7 +16,7 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-        System.out.println("** Starting Maze Runner");
+        logger.info("** Starting Maze Runner");
 
         Options options = new Options();
         CommandLineParser commandLineParser = new DefaultParser();
@@ -26,7 +26,7 @@ public class Main {
         try {
             CommandLine cmd = commandLineParser.parse(options, args);
             String filePath = cmd.getOptionValue("i");
-            System.out.println("**** Reading the maze from file " + filePath);
+            logger.info("**** Reading the maze from file " + filePath);
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -40,10 +40,10 @@ public class Main {
                 System.out.print(System.lineSeparator());
             }
         } catch(Exception e) {
-            System.err.println("/!\\ An error has occured /!\\");
+            logger.error("/!\\ An error has occured /!\\");
         }
-        System.out.println("**** Computing path");
-        System.out.println("PATH NOT COMPUTED");
-        System.out.println("** End of MazeRunner");
+        logger.info("**** Computing path");
+        logger.info("PATH NOT COMPUTED");
+        logger.info("** End of MazeRunner");
     }
 }
