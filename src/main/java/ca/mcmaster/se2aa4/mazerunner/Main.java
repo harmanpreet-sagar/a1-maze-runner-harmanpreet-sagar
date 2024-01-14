@@ -48,26 +48,9 @@ public class Main {
         // Walking Skeleton
         logger.info("Walking Skeleton");
         Configuration config = new Configuration(args);
-        Maze maze = new Maze(config.width(), config.height());
+        PathFinder pathFinder = new PathFinder(config.width(), config.height());
 
         logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
-
-    // Method to move forward
-    public static String forward() {
-        return "F";
-    }
-
-    // Method to turn right
-    public static String right() {
-        return "R";
-    }
-
-    // Method to turn left
-    public static String left() {
-        return "L";
-    }
-
-
 }
