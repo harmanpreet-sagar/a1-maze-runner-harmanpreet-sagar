@@ -64,4 +64,21 @@ public class Main {
         random.setSeed(seed);
         return random;
     }
+
+    // Method to move forward
+    public static String forward() {
+        return "F";
+    }
+
+    // Method to turn right
+    public static String right() {
+        return "R";
+    }
+
+    // Method to turn left
+    public static String left() {
+        return "L";
+    }
+
+
 }
