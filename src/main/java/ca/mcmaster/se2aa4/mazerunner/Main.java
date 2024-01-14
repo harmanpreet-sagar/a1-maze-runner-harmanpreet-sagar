@@ -3,6 +3,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Random;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -31,7 +32,7 @@ public class Main {
             String line;
             while ((line = reader.readLine()) != null) {
                 for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {  
+                    if (line.charAt(idx) == '#') {
                         System.out.print("WALL ");
                     } else if (line.charAt(idx) == ' ') {
                         System.out.print("PASS ");
@@ -39,11 +40,28 @@ public class Main {
                 }
                 System.out.print(System.lineSeparator());
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
         logger.info("**** Computing path");
+
+        // Walking Skeleton
+        logger.info("Walking Skeleton");
+        Configuration config = new Configuration(args);
+        Random random = buildReproducibleGenerator(config.seed());
+        Maze maze = new Maze(config.width(), config.height());
+        maze.carve(random);
+        MazeExporter mazeExporter = new MazeExporter(maze);
+        mazeExporter.export(config.outputFile());
+
         logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
+    }
+
+    private static Random buildReproducibleGenerator(long seed) {
+        // TODO: Double check method
+        Random random = new Random();
+        random.setSeed(seed);
+        return random;
     }
 }
