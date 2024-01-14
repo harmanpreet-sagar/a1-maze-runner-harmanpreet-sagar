@@ -2,7 +2,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 public class PathFinder {
 
-    public PathFinder(int i, int j) {}
+    public PathFinder() {}
 
     // Method to move forward
     public static String forward() {
