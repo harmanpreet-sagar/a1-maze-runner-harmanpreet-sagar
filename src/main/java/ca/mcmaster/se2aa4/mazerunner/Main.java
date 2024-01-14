@@ -48,21 +48,10 @@ public class Main {
         // Walking Skeleton
         logger.info("Walking Skeleton");
         Configuration config = new Configuration(args);
-        Random random = buildReproducibleGenerator(config.seed());
         Maze maze = new Maze(config.width(), config.height());
-        maze.carve(random);
-        MazeExporter mazeExporter = new MazeExporter(maze);
-        mazeExporter.export(config.outputFile());
 
         logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
-    }
-
-    private static Random buildReproducibleGenerator(long seed) {
-        // TODO: Double check method
-        Random random = new Random();
-        random.setSeed(seed);
-        return random;
     }
 
     // Method to move forward
