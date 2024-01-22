@@ -19,27 +19,9 @@ public class Main {
     public static void main(String[] args) {
         logger.info("** Starting Maze Runner");
 
-        Options options = new Options();
-        CommandLineParser commandLineParser = new DefaultParser();
-
-        options.addOption("i", true, "FileName with option reacting to -i");
-
+        
         try {
-            CommandLine cmd = commandLineParser.parse(options, args);
-            String filePath = cmd.getOptionValue("i");
-            logger.info("**** Reading the maze from file " + filePath);
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
-                    }
-                }
-                System.out.print(System.lineSeparator());
-            }
+            Configuration config = new Configuration(args);
         } catch (Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
@@ -47,7 +29,7 @@ public class Main {
 
         // Walking Skeleton
         logger.info("Walking Skeleton");
-        Configuration config = new Configuration(args);
+        
         PathFinder pathFinder = new PathFinder();
 
         logger.info("PATH NOT COMPUTED");
