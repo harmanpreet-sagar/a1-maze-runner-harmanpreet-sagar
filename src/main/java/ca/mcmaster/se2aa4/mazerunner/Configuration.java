@@ -2,6 +2,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -15,31 +16,31 @@ public class Configuration {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private char[][] maze;
 
-
-    public Configuration(String[] args) throws Exception{
+    public Configuration(String[] args) throws Exception {
         Options options = new Options();
         CommandLineParser commandLineParser = new DefaultParser();
 
         options.addOption("i", true, "FileName with option reacting to -i");
-        
         CommandLine cmd = commandLineParser.parse(options, args);
-        String filePath = cmd.getOptionValue("i");
-        
+
+        // Sets default filePath to that of the straight.maz.txt
+        String filePath = cmd.getOptionValue("i", "examples/straight.maz.txt");
+
         logger.info("**** Reading the maze from file " + filePath);
 
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
-        String line;
+        // Parses the maze and converts it into a 2D array
+        MazeCreator mazeCreator = new MazeCreator(filePath);
+        maze = mazeCreator.createMaze(filePath);
 
-        while ((line = reader.readLine()) != null) {
-            for (int i = 0; i < line.length(); i++) {
-                if (line.charAt(i) == '#') {
-                    System.out.print("WALL ");
-                } else if (line.charAt(i) == ' ' || line.charAt(i) == '\0') {
-                    System.out.print("PASS ");
-                }
-            }
-            System.out.print(System.lineSeparator());
+        // Prints out the maze.
+        for (char[] rows : maze) {
+            System.out.println(Arrays.toString(rows));
         }
+    }
+    
+    public char[][] parsedMaze() {
+        return maze;
     }
 }

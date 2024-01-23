@@ -3,6 +3,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Arrays;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -22,6 +23,14 @@ public class Main {
         
         try {
             Configuration config = new Configuration(args);
+            PathFinder pathFinder = new PathFinder();
+
+            int[] entrance = pathFinder.entrance(config.parsedMaze());
+            System.out.println("Entrance [row, column]: " + Arrays.toString(entrance));
+
+            int[] exit = pathFinder.exit(config.parsedMaze());
+            System.out.println("Exit [row, column]: " + Arrays.toString(exit));
+
         } catch (Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
@@ -30,8 +39,6 @@ public class Main {
         // Walking Skeleton
         logger.info("Walking Skeleton");
         
-        PathFinder pathFinder = new PathFinder();
-
         logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
