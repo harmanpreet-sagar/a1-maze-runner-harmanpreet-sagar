@@ -26,7 +26,8 @@ public class Configuration {
         CommandLine cmd = commandLineParser.parse(options, args);
 
         // Sets default filePath to that of the straight.maz.txt
-        String filePath = cmd.getOptionValue("i", "examples/straight.maz.txt");
+        // String filePath = cmd.getOptionValue("i", "examples/straight.maz.txt");
+        String filePath = "examples/straight.maz.txt";  // Only used for the mvp
 
         logger.info("**** Reading the maze from file " + filePath);
 
