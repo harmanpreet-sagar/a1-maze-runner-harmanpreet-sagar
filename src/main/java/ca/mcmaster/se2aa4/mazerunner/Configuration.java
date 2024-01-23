@@ -16,7 +16,9 @@ public class Configuration {
 
     private static final Logger logger = LogManager.getLogger();
 
-    public Configuration(String[] args) throws Exception{
+    private char[][] maze;
+
+    public Configuration(String[] args) throws Exception {
         Options options = new Options();
         CommandLineParser commandLineParser = new DefaultParser();
 
@@ -25,16 +27,20 @@ public class Configuration {
 
         // Sets default filePath to that of the straight.maz.txt
         String filePath = cmd.getOptionValue("i", "examples/straight.maz.txt");
-        
+
         logger.info("**** Reading the maze from file " + filePath);
 
         // Parses the maze and converts it into a 2D array
         MazeCreator mazeCreator = new MazeCreator(filePath);
-        char[][] maze = mazeCreator.createMaze(filePath);
+        maze = mazeCreator.createMaze(filePath);
 
         // Prints out the maze.
         for (char[] rows : maze) {
             System.out.println(Arrays.toString(rows));
         }
+    }
+    
+    public char[][] parsedMaze() {
+        return maze;
     }
 }

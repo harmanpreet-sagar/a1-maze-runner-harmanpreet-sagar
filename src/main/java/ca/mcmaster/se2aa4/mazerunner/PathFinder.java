@@ -20,13 +20,31 @@ public class PathFinder {
     }
 
     // Method to determine the location of the entrance
-    public static String entrance() {
-        return "";
+    public int[] entrance(char[][] maze) {
+        int column = 0;
+        int row = 0;
+
+        while (row < maze.length && maze[row][column] == '#') {
+            row++;
+        }
+
+        int[] entranceCoords = { row, column };
+
+        return entranceCoords;
     }
 
     // Method to determine the location of the exit
-    public static String exit() {
-        return "";
+    public int[] exit(char[][] maze) {
+        int column = maze[0].length - 1;
+        int row = 0;
+
+        while (row < maze.length && maze[row][column] == '#') {
+            row++;
+        }
+        
+        int[] exitCoords = { row, column };
+
+        return exitCoords;
     }
 
     // Method to determine the canonical path
