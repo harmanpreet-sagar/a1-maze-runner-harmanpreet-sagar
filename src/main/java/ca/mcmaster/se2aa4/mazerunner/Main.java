@@ -31,15 +31,17 @@ public class Main {
             int[] exit = pathFinder.exit(config.parsedMaze());
             System.out.println("Exit [row, column]: " + Arrays.toString(exit));
 
+            logger.info("**** Computing path");
+
+            String path = pathFinder.canonicalPath(config.parsedMaze(), entrance, exit);
+            System.out.println("The canonical path is: " + path);
+            
+            //logger.info("PATH NOT COMPUTED");
+            
         } catch (Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
-        logger.info("**** Computing path");
 
-        // Walking Skeleton
-        logger.info("Walking Skeleton");
-        
-        logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
 }
