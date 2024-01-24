@@ -33,10 +33,10 @@ public class Configuration {
         MazeCreator mazeCreator = new MazeCreator(filePath);
         maze = mazeCreator.createMaze(filePath);
 
-        // // Prints out the maze.
-        // for (char[] rows : maze) {
-        //     System.out.println(Arrays.toString(rows));
-        // }
+        // Prints out the maze.
+        for (char[] rows : maze) {
+            System.out.println(Arrays.toString(rows));
+        }
     }
     
     public char[][] parsedMaze() {

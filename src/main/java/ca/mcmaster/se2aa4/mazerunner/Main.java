@@ -19,11 +19,6 @@ public class Main {
 
             char[][] parseMaze = config.parsedMaze();
 
-            // Prints out the maze.
-            for (char[] rows : parseMaze) {
-                System.out.println(Arrays.toString(rows));
-            }
-
             int[] entrance = pathFinder.entrance(parseMaze);
             System.out.println("Entrance [row, column]: " + Arrays.toString(entrance));
 
