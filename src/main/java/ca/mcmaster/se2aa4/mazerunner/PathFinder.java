@@ -55,23 +55,22 @@ public class PathFinder {
         int[] startLocation = entrance(maze);
         int[] stopLocation = exit(maze);
         int[] currentLocation = startLocation;
-
-        String newOrientation = "RIGHT";
+        String orientation = "RIGHT";
 
         StringBuilder sb = new StringBuilder();
 
         while (!Arrays.equals(currentLocation, stopLocation)) {
-            int[] checkLoc = CheckLocation(newOrientation, currentLocation);
+            int[] checkLoc = CheckLocation(orientation, currentLocation);
 
             // If there is a wall, the object turns left, else it moves forward
             // and turns right.
             if (maze[checkLoc[0]][checkLoc[1]] == '#') {
-                newOrientation = nextOrientation(newOrientation, "LEFT");
+                orientation = nextOrientation(orientation, "LEFT");
                 sb.append(left());
             } else {
                 currentLocation = checkLoc;
                 sb.append(forward());
-                newOrientation = nextOrientation(newOrientation, "RIGHT");
+                orientation = nextOrientation(orientation, "RIGHT");
                 sb.append(right());
             }
 
@@ -89,8 +88,36 @@ public class PathFinder {
     }
     
     // Method to determine the factorized path
-    public static String factorizedPath() {
-        return "";
+    public String factorizedPath(char[][] maze) {
+        StringBuilder sb = new StringBuilder(" ");
+        String canonPath = canonicalPath(maze);
+        char currentAlpha = 'F';
+        int counter = 0;
+        
+        // Algorithm to convert the canonical path to a factorized path
+        for (int i = 0; i < canonPath.length(); i++) {
+            if (canonPath.charAt(i) == currentAlpha) {
+                counter++;
+            } else {
+                sb.append(counter);
+                sb.append(currentAlpha);
+                sb.append(" ");
+                counter = 1;
+                currentAlpha = canonPath.charAt(i);
+            }
+        }
+
+        // Appends the last character
+        sb.append(counter);
+        sb.append(canonPath.charAt(canonPath.length() - 1));
+
+        String factorPath = sb.toString();
+
+        factorPath = factorPath.replaceAll(" 1F", " F");
+        factorPath = factorPath.replaceAll(" 1R", " R");
+        factorPath = factorPath.replaceAll(" 1L", " L");
+        
+        return factorPath;
     }
 
     // Method to determine the location to be checked for wall.
