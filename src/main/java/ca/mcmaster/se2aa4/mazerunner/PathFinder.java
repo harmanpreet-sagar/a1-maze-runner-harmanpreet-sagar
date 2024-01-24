@@ -89,8 +89,37 @@ public class PathFinder {
     }
     
     // Method to determine the factorized path
-    public static String factorizedPath() {
-        return "";
+    public String factorizedPath(char[][] maze) {
+        StringBuilder sb = new StringBuilder();
+        String canonPath = canonicalPath(maze);
+        char currentAlpha = 'F';
+        int counter = 0;
+
+        for (int i = 0; i < canonPath.length(); i++) {
+            if (canonPath.charAt(i) == currentAlpha && i != canonPath.length() - 1) {
+                counter++;
+            } else if (i == canonPath.length() - 1) {
+                if (canonPath.charAt(i) == currentAlpha) {
+                    counter++;
+                } else {
+                    counter = 1;
+                    currentAlpha = canonPath.charAt(i);
+                }
+                sb.append(counter);
+                sb.append(currentAlpha);
+                sb.append(" ");
+            } else {
+                sb.append(counter);
+                sb.append(currentAlpha);
+                sb.append(" ");
+                currentAlpha = canonPath.charAt(i);
+                counter = 1;
+            }
+        }
+
+        String factorPath = sb.toString();
+        factorPath = factorPath.replaceAll(" 1", " ");
+        return factorPath;
     }
 
     // Method to determine the location to be checked for wall.
