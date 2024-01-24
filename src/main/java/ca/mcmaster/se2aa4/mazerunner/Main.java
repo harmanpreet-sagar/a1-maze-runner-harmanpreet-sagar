@@ -1,14 +1,6 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.Arrays;
-
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Options;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,20 +17,26 @@ public class Main {
             Configuration config = new Configuration(args);
             PathFinder pathFinder = new PathFinder();
 
-            int[] entrance = pathFinder.entrance(config.parsedMaze());
+            char[][] parseMaze = config.parsedMaze();
+
+            int[] entrance = pathFinder.entrance(parseMaze);
             System.out.println("Entrance [row, column]: " + Arrays.toString(entrance));
 
-            int[] exit = pathFinder.exit(config.parsedMaze());
+            int[] exit = pathFinder.exit(parseMaze);
             System.out.println("Exit [row, column]: " + Arrays.toString(exit));
 
             logger.info("**** Computing path");
 
-            String path = pathFinder.canonicalPath(config.parsedMaze(), entrance, exit);
-            System.out.println("The canonical path is: " + path);
-            
-            //logger.info("PATH NOT COMPUTED");
+            // Print the canonical path
+            try {
+                String path = pathFinder.canonicalPath(parseMaze);
+                System.out.println("The canonical path is: " + path);
+            } catch (Exception e) {
+                logger.info("PATH NOT COMPUTED");
+            }
             
         } catch (Exception e) {
+            logger.error(e.getMessage());
             logger.error("/!\\ An error has occured /!\\");
         }
 
