@@ -58,7 +58,7 @@ public class PathFinder {
 
         String newOrientation = "RIGHT";
 
-        StringBuilder sb = new StringBuilder(forward());
+        StringBuilder sb = new StringBuilder();
 
         while (!Arrays.equals(currentLocation, stopLocation)) {
             int[] checkLoc = CheckLocation(newOrientation, currentLocation);
@@ -79,6 +79,10 @@ public class PathFinder {
         sb.append(left());
 
         String path = sb.toString();
+        
+        // Since RL just puts the orientation exactly how it was, we can remove
+        // it from the path.
+        path = path.replaceAll("RL", "");
         return path;
     }
     
@@ -88,8 +92,8 @@ public class PathFinder {
     }
 
     // Method to determine the location to be checked for wall.
-    private int[] CheckLocation(String orientation, int[] currLocation) {
-        int[] frontLocation = Arrays.copyOf(currLocation, currLocation.length);
+    private int[] CheckLocation(String orientation, int[] currentLocation) {
+        int[] frontLocation = Arrays.copyOf(currentLocation, currentLocation.length);
 
         if (orientation.equals("RIGHT")) {
             frontLocation[1] += 1;
