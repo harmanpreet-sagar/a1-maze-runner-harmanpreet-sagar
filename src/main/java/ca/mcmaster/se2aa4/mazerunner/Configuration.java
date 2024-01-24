@@ -1,7 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.Arrays;
 
 import org.apache.commons.cli.CommandLine;
@@ -26,8 +24,8 @@ public class Configuration {
         CommandLine cmd = commandLineParser.parse(options, args);
 
         // Sets default filePath to that of the straight.maz.txt
-        // String filePath = cmd.getOptionValue("i", "examples/straight.maz.txt");
-        String filePath = "examples/straight.maz.txt";  // Only used for the mvp
+        String filePath = cmd.getOptionValue("i", "examples/straight.maz.txt");
+        // String filePath = "examples/straight.maz.txt";  // Only used for the mvp
 
         logger.info("**** Reading the maze from file " + filePath);
 
@@ -35,10 +33,10 @@ public class Configuration {
         MazeCreator mazeCreator = new MazeCreator(filePath);
         maze = mazeCreator.createMaze(filePath);
 
-        // Prints out the maze.
-        for (char[] rows : maze) {
-            System.out.println(Arrays.toString(rows));
-        }
+        // // Prints out the maze.
+        // for (char[] rows : maze) {
+        //     System.out.println(Arrays.toString(rows));
+        // }
     }
     
     public char[][] parsedMaze() {
