@@ -76,6 +76,8 @@ public class PathFinder {
             }
 
         }
+        // Added this as at the end it usually ends at "FR" instead of "FRL",
+        // which then can easily be modified to remove the "RL".
         sb.append(left());
 
         String path = sb.toString();
