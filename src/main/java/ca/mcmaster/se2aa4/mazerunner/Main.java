@@ -32,7 +32,7 @@ public class Main {
                 String path = pathFinder.canonicalPath(parseMaze);
                 System.out.println("The canonical path is: " + path);
                 String factorPath = pathFinder.factorizedPath(parseMaze);
-                System.out.println("The factorized path is: " + factorPath);
+                System.out.println("The factorized path is:" + factorPath);
             } catch (Exception e) {
                 logger.info("PATH NOT COMPUTED");
             }
