@@ -55,7 +55,7 @@ public class PathFinder {
         int[] startLocation = entrance(maze);
         int[] stopLocation = exit(maze);
         int[] currentLocation = startLocation;
-        String orientation = "RIGHT";
+        String orientation = "EAST";
 
         StringBuilder sb = new StringBuilder();
 
@@ -124,11 +124,11 @@ public class PathFinder {
     private int[] CheckLocation(String orientation, int[] currentLocation) {
         int[] frontLocation = Arrays.copyOf(currentLocation, currentLocation.length);
 
-        if (orientation.equals("RIGHT")) {
+        if (orientation.equals("EAST")) {
             frontLocation[1] += 1;
-        } else if (orientation.equals("LEFT")) {
+        } else if (orientation.equals("WEST")) {
             frontLocation[1] -= 1;
-        } else if (orientation.equals("UP")) {
+        } else if (orientation.equals("NORTH")) {
             frontLocation[0] -= 1;
         } else {
             frontLocation[0] += 1;
@@ -142,32 +142,32 @@ public class PathFinder {
         String nextOrientation = currentOrientation;
 
         switch (currentOrientation) {
-            case "LEFT":
+            case "WEST":
                 if (turnDirection.equals("LEFT")) {
-                    nextOrientation = "DOWN";
+                    nextOrientation = "SOUTH";
                 } else if (turnDirection.equals("RIGHT")) {
-                    nextOrientation = "UP";
+                    nextOrientation = "NORTH";
                 }
                 break;
-            case "RIGHT":
+            case "EAST":
                 if (turnDirection.equals("LEFT")) {
-                    nextOrientation = "UP";
+                    nextOrientation = "NORTH";
                 } else if (turnDirection.equals("RIGHT")) {
-                    nextOrientation = "DOWN";
+                    nextOrientation = "SOUTH";
                 }
                 break;
-            case "UP":
+            case "NORTH":
                 if (turnDirection.equals("LEFT")) {
-                    nextOrientation = "LEFT";
+                    nextOrientation = "WEST";
                 } else if (turnDirection.equals("RIGHT")) {
-                    nextOrientation = "RIGHT";
+                    nextOrientation = "EAST";
                 }
                 break;
-            case "DOWN":
+            case "SOUTH":
                 if (turnDirection.equals("LEFT")) {
-                    nextOrientation = "RIGHT";
+                    nextOrientation = "EAST";
                 } else if (turnDirection.equals("RIGHT")) {
-                    nextOrientation = "LEFT";
+                    nextOrientation = "WEST";
                 }
                 break;
             default:
