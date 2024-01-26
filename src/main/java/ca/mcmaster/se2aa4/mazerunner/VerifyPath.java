@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+import java.util.Arrays;
+
 public class VerifyPath {
 
     private PathFinder pathFinder = new PathFinder();
@@ -24,20 +26,85 @@ public class VerifyPath {
     }
 
     public String pathVerified() {
-        // String status = "";
+        StringBuilder sb = new StringBuilder();
+        String status = "";
 
-        String status = factorToCanon(enterPath);
+        status = verifyWE();
 
+        if (!status.equals("PASS")) {
+            sb.append(verifyWE());
+            status = verifyEW();
+
+            if (!status.equals("PASS")) {
+                sb.append("\n" + verifyEW());
+                status = sb.toString();
+            }
+        }
+        
         return status;
     }
 
     private String verifyWE() {
         String status = "";
+        String orientation = "EAST";
+        int[] currentLocation = entranceWE;
+        String path = factorToCanon(enterPath);
+
+        for (int index = 0; index < path.length(); index++) {
+            char currentChar = path.charAt(index);
+            if (currentChar != 'F') {
+                orientation = nextOrientation(orientation, currentChar);
+            } else {
+                currentLocation = nextLocation(orientation, currentLocation);
+                if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
+                    status = "FAILED FOR WEST TO EAST: HIT LOCATION - " + Arrays.toString(currentLocation)
+                            + " ORIENTATION: " + orientation;
+                    break;
+                } else {
+                    status = "PASS";
+                }
+            }
+        }
+
+        if (status.equals("PASS")) {
+            if (!Arrays.equals(currentLocation, exitWE)) {
+                status = "FAILED FOR WEST TO EAST: DID NOT REACH EXIT. FINAL LOCATION: " + Arrays.toString(currentLocation)
+                        + " Desired final Location: " + Arrays.toString(exitWE);
+            }
+        }
+
         return status;
     }
     
     private String verifyEW() {
         String status = "";
+        String orientation = "WEST";
+        int[] currentLocation = entranceEW;
+        String path = factorToCanon(enterPath);
+
+        for (int index = 0; index < path.length(); index++) {
+            char currentChar = path.charAt(index);
+            if (currentChar != 'F') {
+                orientation = nextOrientation(orientation, currentChar);
+            } else {
+                currentLocation = nextLocation(orientation, currentLocation);
+                if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
+                    status = "FAILED FOR EAST TO WEST: HIT LOCATION - " + Arrays.toString(currentLocation)
+                            + " ORIENTATION: " + orientation;
+                    break;
+                } else {
+                    status = "PASS";
+                }
+            }
+        }
+
+        if (status.equals("PASS")) {
+            if (!Arrays.equals(currentLocation, exitEW)) {
+                status = "FAILED FOR EAST TO WEST: DID NOT REACH EXIT. FINAL LOCATION: " + Arrays.toString(currentLocation)
+                        + " Desired final Location: " + Arrays.toString(exitEW);
+            }
+        }
+
         return status;
     }
     
@@ -56,7 +123,7 @@ public class VerifyPath {
                 break;
             }
         }
-        
+
         if (!hasNumber) {
             return factPath;
         }
@@ -64,29 +131,6 @@ public class VerifyPath {
         char currentChar;
         int charValue;
         int index = 0;
-
-        // while (index < factPath.length()) {
-        //     if ((index < (factPath.length() - 2)) && (Character.isDigit(factPath.charAt(index)))
-        //             && (Character.isDigit(factPath.charAt(index + 1)))) {
-        //         charValue = Integer.parseInt(factPath.substring(index, index + 2));
-        //         currentChar = factPath.charAt(index + 2);
-        //         for (int j = 0; j < charValue; j++) {
-        //             sb.append(currentChar);
-        //         }
-        //         index += 3;
-        //     } else if ((index < factPath.length() - 2) && (Character.isDigit(factPath.charAt(index)))) {
-        //         charValue = Integer.parseInt(factPath.substring(index, index + 1));
-        //         currentChar = factPath.charAt(index + 1);
-        //         for (int j = 0; j < charValue; j++) {
-        //             sb.append(currentChar);
-        //         }
-        //         index += 2;
-        //     } else {
-        //         currentChar = factPath.charAt(index);
-        //         sb.append(currentChar);
-        //         index++;
-        //     }
-        // }
 
         while (index < factPath.length()) {
             charValue = 0;
@@ -98,7 +142,7 @@ public class VerifyPath {
             currentChar = factPath.charAt(index);
 
             if (charValue == 0) {
-                sb.append(currentChar); 
+                sb.append(currentChar);
             } else {
                 for (int i = 0; i < charValue; i++) {
                     sb.append(currentChar);
@@ -110,6 +154,64 @@ public class VerifyPath {
 
         String canonicalPath = sb.toString();
         return canonicalPath;
+    }
+    
+    // Method to determine the location to be checked for wall.
+    private int[] nextLocation(String orientation, int[] currentLocation) {
+        int[] frontLocation = Arrays.copyOf(currentLocation, currentLocation.length);
+
+        if (orientation.equals("EAST")) {
+            frontLocation[1] += 1;
+        } else if (orientation.equals("WEST")) {
+            frontLocation[1] -= 1;
+        } else if (orientation.equals("NORTH")) {
+            frontLocation[0] -= 1;
+        } else {
+            frontLocation[0] += 1;
+        }
+
+        return frontLocation;
+    }
+
+    // Method to determine the next orientation of the object traversing the maze.
+    private String nextOrientation(String currentOrientation, char turnDirection) {
+        String nextOrientation = currentOrientation;
+
+        switch (currentOrientation) {
+            case "WEST":
+                if (turnDirection == 'L') {
+                    nextOrientation = "SOUTH";
+                } else if (turnDirection == 'R') {
+                    nextOrientation = "NORTH";
+                }
+                break;
+            case "EAST":
+                if (turnDirection == 'L') {
+                    nextOrientation = "NORTH";
+                } else if (turnDirection == 'R') {
+                    nextOrientation = "SOUTH";
+                }
+                break;
+            case "NORTH":
+                if (turnDirection == 'L') {
+                    nextOrientation = "WEST";
+                } else if (turnDirection == 'R') {
+                    nextOrientation = "EAST";
+                }
+                break;
+            case "SOUTH":
+                if (turnDirection == 'L') {
+                    nextOrientation = "EAST";
+                } else if (turnDirection == 'R') {
+                    nextOrientation = "WEST";
+                }
+                break;
+            default:
+                nextOrientation = currentOrientation;
+                break;
+        }
+
+        return nextOrientation;
     }
 
 }
