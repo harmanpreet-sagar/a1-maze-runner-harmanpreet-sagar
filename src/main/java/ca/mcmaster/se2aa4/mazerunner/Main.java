@@ -14,34 +14,10 @@ public class Main {
 
         
         try {
-            Configuration config = new Configuration(args);
-            PathFinder pathFinder = new PathFinder();
-            char[][] parseMaze = config.parsedMaze();
-
-            int[] entrance = pathFinder.entrance(parseMaze);
-            System.out.println("Entrance [row, column]: " + Arrays.toString(entrance));
-
-            int[] exit = pathFinder.exit(parseMaze);
-            System.out.println("Exit [row, column]: " + Arrays.toString(exit));
-
-            logger.info("**** Computing path");
-
-            // Print the canonical path
-            try {
-                String path = pathFinder.canonicalPath(parseMaze);
-                System.out.println("The canonical path is: " + path);
-                String factorPath = pathFinder.factorizedPath(parseMaze);
-                System.out.println("The factorized path is:" + factorPath);
-                
-                VerifyPath verifyPath = new VerifyPath(parseMaze, factorPath);
-                System.out.println(verifyPath.pathVerified());
-            } catch (Exception e) {
-                logger.info("PATH NOT COMPUTED");
-            }
-            
+            Configuration.config(args);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            logger.error("/!\\ An error has occured /!\\");
+            logger.error("/!\\ An error has occurred /!\\");
         }
 
         logger.info("** End of MazeRunner");

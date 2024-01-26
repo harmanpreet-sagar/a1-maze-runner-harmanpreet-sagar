@@ -38,11 +38,10 @@ public class MazeCreator {
     // Sub-routine to obtain the width of the maze being parsed.
     private int getWidth(String filePath) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
-        String line;
         int width = 0;
 
         // Sets the length of the line to the width if the line is not null.
-        if ((line = reader.readLine()) != null) {
+        if ((reader.readLine()) != null) {
             width = reader.readLine().length();
         }
 
@@ -54,11 +53,10 @@ public class MazeCreator {
     // Sub-routine to obtain the height of the maze being parsed.
     private int getHeight(String filePath) throws Exception{
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
-        String line;
         int height = 0;
 
         // Iterates through all the lines to obtain the number of rows in the maze.
-        while ((line = reader.readLine()) != null) {
+        while ((reader.readLine()) != null) {
             height++;
         }
 

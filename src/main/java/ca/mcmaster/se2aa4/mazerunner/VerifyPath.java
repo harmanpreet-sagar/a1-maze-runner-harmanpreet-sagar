@@ -37,7 +37,7 @@ public class VerifyPath {
 
             if (!status.equals("PASS")) {
                 sb.append("\n" + verifyEW());
-                status = sb.toString();
+                status = "FAIL \n" + sb.toString();
             }
         }
         

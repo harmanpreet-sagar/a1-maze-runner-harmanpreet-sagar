@@ -51,7 +51,7 @@ public class PathFinder {
     }
 
     // Method to determine the canonical path
-    public String canonicalPath(char[][] maze) {
+    private String canonicalPath(char[][] maze) {
         int[] startLocation = entrance(maze);
         int[] stopLocation = exit(maze);
         int[] currentLocation = startLocation;
