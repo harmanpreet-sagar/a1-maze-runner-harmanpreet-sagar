@@ -16,7 +16,6 @@ public class Main {
         try {
             Configuration config = new Configuration(args);
             PathFinder pathFinder = new PathFinder();
-
             char[][] parseMaze = config.parsedMaze();
 
             int[] entrance = pathFinder.entrance(parseMaze);
@@ -33,6 +32,9 @@ public class Main {
                 System.out.println("The canonical path is: " + path);
                 String factorPath = pathFinder.factorizedPath(parseMaze);
                 System.out.println("The factorized path is:" + factorPath);
+                
+                VerifyPath verifyPath = new VerifyPath(parseMaze, factorPath);
+                System.out.println(verifyPath.pathVerified());
             } catch (Exception e) {
                 logger.info("PATH NOT COMPUTED");
             }
