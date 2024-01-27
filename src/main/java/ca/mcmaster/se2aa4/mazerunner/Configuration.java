@@ -20,6 +20,7 @@ public class Configuration {
         Options options = new Options();
         CommandLineParser commandLineParser = new DefaultParser();
 
+        // Add the i and p options
         options.addOption("i", true, "FileName with option reacting to -i");
         options.addOption("p", true, "Path with option reacting to -p");
 
@@ -39,16 +40,9 @@ public class Configuration {
             System.out.println(Arrays.toString(rows));
         }
 
-        boolean pathVerificationRequest = false;
-
-        for (String argument : args) {
-            if (argument.equals("-p")) {
-                pathVerificationRequest = true;
-                break;
-            }
-        }
-
-        if (pathVerificationRequest) {
+        // Executes the appropriate instructions based on whether the user has
+        // entered the -p flag
+        if (cmd.hasOption("p")) {
             String pathCheck = cmd.getOptionValue("p");
             VerifyPath verifyPath = new VerifyPath(maze, pathCheck);
             logger.info("Path Verification Requested");
@@ -71,18 +65,14 @@ public class Configuration {
 
             logger.info("**** Computing path");
 
-            // Print the canonical path
             try {
+                // Display the path to reach the end.
                 String factorPath = pathFinder.factorizedPath(maze);
-                System.out.println("The factorized path is:" + factorPath);
+                System.out.println("The path is:" + factorPath);
                 
             } catch (Exception e) {
                 logger.info("PATH NOT COMPUTED");
             }
         }
-    }
-    
-    public char[][] parsedMaze() {
-        return maze;
     }
 }
