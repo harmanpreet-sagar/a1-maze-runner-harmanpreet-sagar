@@ -52,10 +52,27 @@ public class PathFinder {
 
     // Method to determine the canonical path
     private String canonicalPath(char[][] maze) {
-        int[] startLocation = entrance(maze);
-        int[] stopLocation = exit(maze);
+        int[] startLocation;
+        int[] stopLocation;
+        String orientation;
+        
+        // Default direction for maze path finding algorithm is West to East
+        boolean westEast = true;
+        
+        if (westEast) {
+            startLocation = entrance(maze);
+            stopLocation = exit(maze);
+            orientation = "EAST";
+        } else {
+            startLocation = exit(maze);
+            stopLocation = entrance(maze);
+            orientation = "WEST";
+        }
+        
         int[] currentLocation = startLocation;
-        String orientation = "EAST";
+
+        System.out.println("Entrance [row, column]: " + Arrays.toString(startLocation));
+        System.out.println("Exit [row, column]: " + Arrays.toString(stopLocation));
 
         StringBuilder sb = new StringBuilder();
 

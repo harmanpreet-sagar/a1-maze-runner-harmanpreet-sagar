@@ -57,12 +57,6 @@ public class Configuration {
         } else {
             PathFinder pathFinder = new PathFinder();
 
-            int[] entrance = pathFinder.entrance(maze);
-            System.out.println("Entrance [row, column]: " + Arrays.toString(entrance));
-
-            int[] exit = pathFinder.exit(maze);
-            System.out.println("Exit [row, column]: " + Arrays.toString(exit));
-
             logger.info("**** Computing path");
 
             try {
