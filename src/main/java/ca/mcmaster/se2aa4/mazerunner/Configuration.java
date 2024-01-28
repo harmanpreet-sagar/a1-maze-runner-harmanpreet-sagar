@@ -37,14 +37,15 @@ public class Configuration {
         if (cmd.hasOption("p")) {
             String pathCheck = cmd.getOptionValue("p");
             VerifyPath verifyPath = new VerifyPath(maze, pathCheck);
-            logger.info("Path Verification Requested");
+            logger.info("**** Path Verification Requested");
             System.out.println("Path to be verified: " + pathCheck);
 
             try {
                 System.out.println("Verification Result: " + verifyPath.pathVerified());
             } catch (Exception e) {
                 System.out.println("Verification Result: FAIL");
-                logger.error("PATH GOES OUT OF BOUNDS");
+                System.out.println("PATH GOES OUT OF BOUNDS");
+                logger.error("**** " + e.getMessage());
             }
         } else {
             PathFinder pathFinder = new PathFinder(maze);
@@ -52,12 +53,13 @@ public class Configuration {
             logger.info("**** Computing path");
 
             try {
+                logger.info("**** PATH COMPUTED");
                 // Display the path to reach the end.
                 String factorPath = pathFinder.factorizedPath();
                 System.out.println("The path is:" + factorPath);
                 
             } catch (Exception e) {
-                logger.info("PATH NOT COMPUTED");
+                logger.info("**** PATH NOT COMPUTED");
             }
         }
     }
