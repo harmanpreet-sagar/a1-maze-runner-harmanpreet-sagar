@@ -69,4 +69,19 @@ public class Movement {
     public static String getNextOrientation(String currentOrientation, char turnDirection) {
         return nextOrientation(currentOrientation, turnDirection);
     }
+
+    // Method to move forward
+    public static char forward() {
+        return 'F';
+    }
+
+    // Method to turn right
+    public static char right() {
+        return 'R';
+    }
+
+    // Method to turn left
+    public static char left() {
+        return 'L';
+    }
 }

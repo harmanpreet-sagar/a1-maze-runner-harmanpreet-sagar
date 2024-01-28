@@ -76,7 +76,7 @@ public class VerifyPath {
         // any walls hit as a result of the entered path.
         for (int index = 0; index < path.length(); index++) {
             char currentChar = path.charAt(index);
-            if (currentChar != 'F') {
+            if (currentChar != Movement.forward()) {
                 startOrientation = Movement.getNextOrientation(startOrientation, currentChar);
             } else {
                 currentLocation = Movement.getCheckLocation(startOrientation, currentLocation);

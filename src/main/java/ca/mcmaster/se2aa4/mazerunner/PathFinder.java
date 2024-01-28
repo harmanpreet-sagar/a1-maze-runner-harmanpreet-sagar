@@ -11,21 +11,6 @@ public class PathFinder {
         this.maze = inputMaze;
     }
 
-    // Method to move forward
-    private static char forward() {
-        return 'F';
-    }
-
-    // Method to turn right
-    private static char right() {
-        return 'R';
-    }
-
-    // Method to turn left
-    private static char left() {
-        return 'L';
-    }
-
     // Method to determine the canonical path
     private String canonicalPath() {
         int[] startLocation;
@@ -55,19 +40,19 @@ public class PathFinder {
             // If there is a wall, the object turns left, else it moves forward
             // and turns right.
             if (maze[checkLoc[0]][checkLoc[1]] == '#') {
-                orientation = Movement.getNextOrientation(orientation, left());
-                sb.append(left());
+                orientation = Movement.getNextOrientation(orientation, Movement.left());
+                sb.append(Movement.left());
             } else {
                 currentLocation = checkLoc;
-                sb.append(forward());
-                orientation = Movement.getNextOrientation(orientation, right());
-                sb.append(right());
+                sb.append(Movement.forward());
+                orientation = Movement.getNextOrientation(orientation, Movement.right());
+                sb.append(Movement.right());
             }
 
         }
         // Added this as at the end it usually ends at "FR" instead of "FRL",
         // which then can easily be modified to remove the "RL".
-        sb.append(left());
+        sb.append(Movement.left());
 
         String path = sb.toString();
         
