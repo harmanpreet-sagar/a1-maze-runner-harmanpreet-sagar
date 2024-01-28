@@ -34,11 +34,6 @@ public class Configuration {
         // Parses the maze and converts it into a 2D array
         maze = MazeCreator.createMaze(filePath);
 
-        // Prints out the maze.
-        for (char[] rows : maze) {
-            System.out.println(Arrays.toString(rows));
-        }
-
         // Executes the appropriate instructions based on whether the user has
         // entered the -p flag
         if (cmd.hasOption("p")) {

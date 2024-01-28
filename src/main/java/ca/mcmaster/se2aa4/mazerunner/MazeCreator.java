@@ -16,15 +16,19 @@ public class MazeCreator {
 
         char[][] maze = new char[height][width];
 
-        // Inserts the walls and empty spaces of the maze to a 2D Array
+        // Inserts the walls and empty spaces of the maze to a 2D Array and
+        // prints the maze.
         for (int row = 0; (line = reader.readLine()) != null; row++) {
             for (int column = 0; column < line.length(); column++) {
                 if (line.charAt(column) == '#') {
                     maze[row][column] = '#';
+                    System.out.print("#");
                 } else if (line.charAt(column) == ' ' || line.charAt(column) == '\0') {
                     maze[row][column] = ' ';
+                    System.out.print(" ");
                 }
             }
+            System.out.println();
         }
 
         reader.close();
