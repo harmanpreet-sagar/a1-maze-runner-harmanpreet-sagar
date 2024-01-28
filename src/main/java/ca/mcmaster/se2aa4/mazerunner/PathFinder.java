@@ -47,9 +47,6 @@ public class PathFinder {
         
         int[] currentLocation = startLocation;
 
-        System.out.println("Entrance [row, column]: " + Arrays.toString(startLocation));
-        System.out.println("Exit [row, column]: " + Arrays.toString(stopLocation));
-
         StringBuilder sb = new StringBuilder();
 
         while (!Arrays.equals(currentLocation, stopLocation)) {
