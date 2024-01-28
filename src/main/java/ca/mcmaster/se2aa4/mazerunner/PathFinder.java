@@ -2,14 +2,15 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.util.Arrays;
 
-
 public class PathFinder {
 
-    char[][] maze;
+    private char[][] maze;
 
     public PathFinder(char[][] inputMaze) {
         this.maze = inputMaze;
     }
+
+    Movement move = new Movement();
 
     // Method to determine the canonical path
     private String canonicalPath() {
@@ -35,24 +36,24 @@ public class PathFinder {
         StringBuilder sb = new StringBuilder();
 
         while (!Arrays.equals(currentLocation, stopLocation)) {
-            int[] checkLoc = Movement.getNextLocation(orientation, currentLocation);
+            int[] checkLoc = move.getNextLocation(orientation, currentLocation);
 
             // If there is a wall, the object turns left, else it moves forward
             // and turns right.
             if (maze[checkLoc[0]][checkLoc[1]] == '#') {
-                orientation = Movement.getNextOrientation(orientation, Movement.left());
-                sb.append(Movement.left());
+                orientation = move.getNextOrientation(orientation, move.left());
+                sb.append(move.left());
             } else {
                 currentLocation = checkLoc;
-                sb.append(Movement.forward());
-                orientation = Movement.getNextOrientation(orientation, Movement.right());
-                sb.append(Movement.right());
+                sb.append(move.forward());
+                orientation = move.getNextOrientation(orientation, move.right());
+                sb.append(move.right());
             }
 
         }
         // Added this as at the end it usually ends at "FR" instead of "FRL",
         // which then can easily be modified to remove the "RL".
-        sb.append(Movement.left());
+        sb.append(move.left());
 
         String path = sb.toString();
         

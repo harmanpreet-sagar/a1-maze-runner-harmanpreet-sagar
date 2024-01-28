@@ -1,6 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 public class Openings {
+    
     // Method to determine the location of the entrance on the west border
     private static int[] westEntrance(char[][] maze) {
         int column = 0;
