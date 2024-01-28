@@ -26,34 +26,6 @@ public class PathFinder {
         return 'L';
     }
 
-    // Method to determine the location of the entrance
-    public int[] entrance() {
-        int column = 0;
-        int row = 0;
-
-        while (row < maze.length && maze[row][column] == '#') {
-            row++;
-        }
-
-        int[] entranceCoords = { row, column };
-
-        return entranceCoords;
-    }
-
-    // Method to determine the location of the exit
-    public int[] exit() {
-        int column = maze[0].length - 1;
-        int row = 0;
-
-        while (row < maze.length && maze[row][column] == '#') {
-            row++;
-        }
-        
-        int[] exitCoords = { row, column };
-
-        return exitCoords;
-    }
-
     // Method to determine the canonical path
     private String canonicalPath() {
         int[] startLocation;
@@ -64,12 +36,12 @@ public class PathFinder {
         boolean westEast = true;
         
         if (westEast) {
-            startLocation = entrance();
-            stopLocation = exit();
+            startLocation = Openings.getWestEntrance(maze);
+            stopLocation = Openings.getEastExit(maze);
             orientation = "EAST";
         } else {
-            startLocation = exit();
-            stopLocation = entrance();
+            startLocation = Openings.getEastEntrance(maze);
+            stopLocation = Openings.getWestExit(maze);
             orientation = "WEST";
         }
         

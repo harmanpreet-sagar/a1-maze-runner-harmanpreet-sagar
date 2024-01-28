@@ -5,7 +5,6 @@ import java.util.Arrays;
 public class VerifyPath {
 
     private char[][] parseMaze;
-    private PathFinder pathFinder;
     private int[] entranceWE;
     private int[] exitWE;
     private int[] entranceEW;
@@ -15,19 +14,18 @@ public class VerifyPath {
     // Constructor for the VerifyPath class
     public VerifyPath(char[][] maze, String enteredPath) {
         this.parseMaze = maze;
-
-        this.pathFinder = new PathFinder(maze);
-
-        this.entranceWE = pathFinder.entrance();
-        this.exitWE = pathFinder.exit();
+        
+        this.entranceWE = Openings.getWestEntrance(maze);
+        this.exitWE = Openings.getEastExit(maze);
 
         // This is because default setting is going West to East
-        this.entranceEW = pathFinder.exit();
-        this.exitEW = pathFinder.entrance();
+        this.entranceEW = Openings.getEastEntrance(maze);
+        this.exitEW = Openings.getWestExit(maze);
 
         this.enterPath = enteredPath;
-        
     }
+
+    
 
     // Method to check for path verification
     public String pathVerified() {
