@@ -35,7 +35,7 @@ public class PathFinder {
         StringBuilder sb = new StringBuilder();
 
         while (!Arrays.equals(currentLocation, stopLocation)) {
-            int[] checkLoc = Movement.getCheckLocation(orientation, currentLocation);
+            int[] checkLoc = Movement.getNextLocation(orientation, currentLocation);
 
             // If there is a wall, the object turns left, else it moves forward
             // and turns right.

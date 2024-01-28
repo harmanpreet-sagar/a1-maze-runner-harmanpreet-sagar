@@ -79,7 +79,7 @@ public class VerifyPath {
             if (currentChar != Movement.forward()) {
                 startOrientation = Movement.getNextOrientation(startOrientation, currentChar);
             } else {
-                currentLocation = Movement.getCheckLocation(startOrientation, currentLocation);
+                currentLocation = Movement.getNextLocation(startOrientation, currentLocation);
                 if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
                     status = "FAIL";
                     break;
