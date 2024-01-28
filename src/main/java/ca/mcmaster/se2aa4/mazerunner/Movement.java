@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Movement {
     
     // Method to determine the location to be checked for wall.
-    private static int[] CheckLocation(String orientation, int[] currentLocation) {
+    private static int[] checkLocation(String orientation, int[] currentLocation) {
         int[] frontLocation = Arrays.copyOf(currentLocation, currentLocation.length);
 
         if (orientation.equals("EAST")) {
@@ -22,7 +22,7 @@ public class Movement {
     }
 
     public static int[] getCheckLocation(String orientation, int[] currentLocation) {
-        return CheckLocation(orientation, currentLocation);
+        return checkLocation(orientation, currentLocation);
     }
 
     // Method to determine the next orientation of the object traversing the maze.

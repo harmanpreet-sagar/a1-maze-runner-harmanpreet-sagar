@@ -30,7 +30,7 @@ public class Configuration {
         logger.trace("**** Reading the maze from file " + filePath);
 
         // Parses the maze and converts it into a 2D array
-        maze = MazeCreator.createMaze(filePath);
+        maze = MazeCreator.getCreatedMaze(filePath);
 
         // Executes the appropriate instructions based on whether the user has
         // entered the -p flag
@@ -41,7 +41,7 @@ public class Configuration {
 
             try {
                 logger.trace("Path verification successful");
-                System.out.println(verifyPath.pathVerified());
+                System.out.println(verifyPath.pathVerificationResult());
             } catch (Exception e) {
                 logger.trace("/!\\ An error has occurred /!\\");
                 System.out.println("incorrect path");
@@ -54,7 +54,7 @@ public class Configuration {
             try {
                 logger.trace("PATH COMPUTED");
                 // Display the path to reach the end.
-                System.out.println(pathFinder.factorizedPath());
+                System.out.println(pathFinder.getFactorizedPath());
                 
             } catch (Exception e) {
                 logger.info("PATH NOT COMPUTED");

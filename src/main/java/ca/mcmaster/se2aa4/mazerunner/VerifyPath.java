@@ -25,10 +25,8 @@ public class VerifyPath {
         this.enterPath = enteredPath;
     }
 
-    
-
     // Method to check for path verification
-    public String pathVerified() {
+    private String pathVerified() {
         String status = "";
         String statusOut = "";
 
@@ -49,44 +47,29 @@ public class VerifyPath {
         return statusOut;
     }
 
+    public String pathVerificationResult() {
+        return pathVerified();
+    }
+
     // Method to verify the path from going West to East
     private String verifyWE() {
-        String status = "";
         String orientation = "EAST";
         int[] currentLocation = entranceWE;
-        String path = factorToCanon();
-
-        // Loop to iterate through the string to trace the steps and check for
-        // any walls hit as a result of the entered path.
-        for (int index = 0; index < path.length(); index++) {
-            char currentChar = path.charAt(index);
-            if (currentChar != 'F') {
-                orientation = Movement.getNextOrientation(orientation, currentChar);
-            } else {
-                currentLocation = Movement.getCheckLocation(orientation, currentLocation);
-                if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
-                    status = "FAIL";
-                    break;
-                } else {
-                    status = "PASS";
-                }
-            }
-        }
-
-        if (status.equals("PASS")) {
-            if (!Arrays.equals(currentLocation, exitWE)) {
-                status = "FAIL";
-            }
-        }
-
-        return status;
+        int[] finalLocation = exitWE;
+        return hitTest(orientation, currentLocation, finalLocation);
     }
     
     // Method to verify the path from going East to West
     private String verifyEW() {
-        String status = "";
         String orientation = "WEST";
         int[] currentLocation = entranceEW;
+        int[] finalLocation = exitEW;
+        return hitTest(orientation, currentLocation, finalLocation);
+    }
+
+    // Method to carry out the hit test
+    private String hitTest(String startOrientation, int[] currentLocation, int[] finalLocation) {
+        String status = "";
         String path = factorToCanon();
 
         // Loop to iterate through the string to trace the steps and check for
@@ -94,9 +77,9 @@ public class VerifyPath {
         for (int index = 0; index < path.length(); index++) {
             char currentChar = path.charAt(index);
             if (currentChar != 'F') {
-                orientation = Movement.getNextOrientation(orientation, currentChar);
+                startOrientation = Movement.getNextOrientation(startOrientation, currentChar);
             } else {
-                currentLocation = Movement.getCheckLocation(orientation, currentLocation);
+                currentLocation = Movement.getCheckLocation(startOrientation, currentLocation);
                 if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
                     status = "FAIL";
                     break;
@@ -107,7 +90,7 @@ public class VerifyPath {
         }
 
         if (status.equals("PASS")) {
-            if (!Arrays.equals(currentLocation, exitEW)) {
+            if (!Arrays.equals(currentLocation, finalLocation)) {
                 status = "FAIL";
             }
         }
@@ -141,6 +124,7 @@ public class VerifyPath {
         int charValue;
         int index = 0;
 
+        // Loop to convert factorized path to canonical path
         while (index < factPath.length()) {
             charValue = 0;
 

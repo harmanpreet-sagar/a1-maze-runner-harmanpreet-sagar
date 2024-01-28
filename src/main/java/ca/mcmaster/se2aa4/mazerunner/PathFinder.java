@@ -78,12 +78,12 @@ public class PathFinder {
     }
     
     // Method to determine the factorized path
-    public String factorizedPath() {
+    private String factorizedPath() {
         StringBuilder sb = new StringBuilder(" ");
         String canonPath = canonicalPath();
         char currentAlpha = 'F';
         int counter = 0;
-        
+
         // Algorithm to convert the canonical path to a factorized path
         for (int i = 0; i < canonPath.length(); i++) {
             if (canonPath.charAt(i) == currentAlpha) {
@@ -106,7 +106,15 @@ public class PathFinder {
         factorPath = factorPath.replaceAll(" 1F", " F");
         factorPath = factorPath.replaceAll(" 1R", " R");
         factorPath = factorPath.replaceAll(" 1L", " L");
-        
+
+        if (factorPath.charAt(0) == ' ') {
+            factorPath = factorPath.substring(1);
+        }
+
         return factorPath;
+    }
+    
+    public String getFactorizedPath() {
+        return factorizedPath();
     }
 }
