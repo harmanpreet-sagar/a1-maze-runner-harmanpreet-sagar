@@ -67,21 +67,28 @@ public class Movement implements MoveInterface {
         return nextOrientation;
     }
 
+    @Override
     public String getNextOrientation(String currentOrientation, char turnDirection) {
         return nextOrientation(currentOrientation, turnDirection);
     }
 
     // Method to move forward
+    
+    @Override
     public char forward() {
         return 'F';
     }
 
     // Method to turn right
+    
+    @Override
     public char right() {
         return 'R';
     }
 
     // Method to turn left
+    
+    @Override
     public char left() {
         return 'L';
     }
