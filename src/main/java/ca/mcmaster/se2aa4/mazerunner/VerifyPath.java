@@ -29,24 +29,24 @@ public class VerifyPath {
 
     // Method to check for path verification
     public String pathVerified() {
-        StringBuilder sb = new StringBuilder();
         String status = "";
+        String statusOut = "";
 
         status = verifyWE();
 
         // If the entered path does not pass the check from going West to East, then we
         // check it for the second direction.
         if (!status.equals("PASS")) {
-            sb.append(verifyWE());
             status = verifyEW();
-
-            if (!status.equals("PASS")) {
-                sb.append("\n" + verifyEW());
-                status = "FAIL \n" + sb.toString();
-            }
         }
 
-        return status;
+        if (status.equals("PASS")) {
+            statusOut = "correct path";
+        } else {
+            statusOut = "incorrect path";
+        }
+
+        return statusOut;
     }
 
     // Method to verify the path from going West to East
@@ -65,8 +65,7 @@ public class VerifyPath {
             } else {
                 currentLocation = Movement.getCheckLocation(orientation, currentLocation);
                 if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
-                    status = "FAILED FOR WEST TO EAST: HIT LOCATION - " + Arrays.toString(currentLocation)
-                            + " ORIENTATION: " + orientation;
+                    status = "FAIL";
                     break;
                 } else {
                     status = "PASS";
@@ -76,9 +75,7 @@ public class VerifyPath {
 
         if (status.equals("PASS")) {
             if (!Arrays.equals(currentLocation, exitWE)) {
-                status = "FAILED FOR WEST TO EAST: DID NOT REACH EXIT. FINAL LOCATION: "
-                        + Arrays.toString(currentLocation)
-                        + " Desired final Location: " + Arrays.toString(exitWE);
+                status = "FAIL";
             }
         }
 
@@ -101,8 +98,7 @@ public class VerifyPath {
             } else {
                 currentLocation = Movement.getCheckLocation(orientation, currentLocation);
                 if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
-                    status = "FAILED FOR EAST TO WEST: HIT LOCATION - " + Arrays.toString(currentLocation)
-                            + " ORIENTATION: " + orientation;
+                    status = "FAIL";
                     break;
                 } else {
                     status = "PASS";
@@ -112,9 +108,7 @@ public class VerifyPath {
 
         if (status.equals("PASS")) {
             if (!Arrays.equals(currentLocation, exitEW)) {
-                status = "FAILED FOR EAST TO WEST: DID NOT REACH EXIT. FINAL LOCATION: "
-                        + Arrays.toString(currentLocation)
-                        + " Desired final Location: " + Arrays.toString(exitEW);
+                status = "FAIL";
             }
         }
 
