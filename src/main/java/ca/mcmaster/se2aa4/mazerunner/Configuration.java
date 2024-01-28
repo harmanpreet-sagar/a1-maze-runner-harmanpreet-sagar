@@ -32,8 +32,7 @@ public class Configuration {
         logger.info("**** Reading the maze from file " + filePath);
 
         // Parses the maze and converts it into a 2D array
-        MazeCreator mazeCreator = new MazeCreator(filePath);
-        maze = mazeCreator.createMaze(filePath);
+        maze = MazeCreator.createMaze(filePath);
 
         // Prints out the maze.
         for (char[] rows : maze) {

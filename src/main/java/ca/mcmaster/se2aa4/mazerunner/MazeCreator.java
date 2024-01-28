@@ -6,7 +6,7 @@ import java.io.FileReader;
 public class MazeCreator {
 
     // Sub-routine to create the 2D array from the parsed maze
-    public char[][] createMaze(String filePath) throws Exception {
+    public static char[][] createMaze(String filePath) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
 
@@ -31,12 +31,9 @@ public class MazeCreator {
 
         return maze;
     }
-
-    public MazeCreator(String filePath) throws Exception {
-    }
     
     // Sub-routine to obtain the width of the maze being parsed.
-    private int getWidth(String filePath) throws Exception {
+    private static int getWidth(String filePath) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         int width = 0;
 
@@ -51,7 +48,7 @@ public class MazeCreator {
     }
     
     // Sub-routine to obtain the height of the maze being parsed.
-    private int getHeight(String filePath) throws Exception{
+    private static int getHeight(String filePath) throws Exception{
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         int height = 0;
 
