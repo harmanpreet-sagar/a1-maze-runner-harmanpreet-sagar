@@ -60,9 +60,9 @@ public class VerifyPath {
         for (int index = 0; index < path.length(); index++) {
             char currentChar = path.charAt(index);
             if (currentChar != 'F') {
-                orientation = nextOrientation(orientation, currentChar);
+                orientation = Movement.getNextOrientation(orientation, currentChar);
             } else {
-                currentLocation = nextLocation(orientation, currentLocation);
+                currentLocation = Movement.getCheckLocation(orientation, currentLocation);
                 if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
                     status = "FAILED FOR WEST TO EAST: HIT LOCATION - " + Arrays.toString(currentLocation)
                             + " ORIENTATION: " + orientation;
@@ -96,9 +96,9 @@ public class VerifyPath {
         for (int index = 0; index < path.length(); index++) {
             char currentChar = path.charAt(index);
             if (currentChar != 'F') {
-                orientation = nextOrientation(orientation, currentChar);
+                orientation = Movement.getNextOrientation(orientation, currentChar);
             } else {
-                currentLocation = nextLocation(orientation, currentLocation);
+                currentLocation = Movement.getCheckLocation(orientation, currentLocation);
                 if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
                     status = "FAILED FOR EAST TO WEST: HIT LOCATION - " + Arrays.toString(currentLocation)
                             + " ORIENTATION: " + orientation;
@@ -172,63 +172,4 @@ public class VerifyPath {
         String canonicalPath = sb.toString();
         return canonicalPath;
     }
-    
-    // Method to determine the location to be checked for wall.
-    private int[] nextLocation(String orientation, int[] currentLocation) {
-        int[] frontLocation = Arrays.copyOf(currentLocation, currentLocation.length);
-
-        if (orientation.equals("EAST")) {
-            frontLocation[1] += 1;
-        } else if (orientation.equals("WEST")) {
-            frontLocation[1] -= 1;
-        } else if (orientation.equals("NORTH")) {
-            frontLocation[0] -= 1;
-        } else {
-            frontLocation[0] += 1;
-        }
-
-        return frontLocation;
-    }
-
-    // Method to determine the next orientation of the object traversing the maze.
-    private String nextOrientation(String currentOrientation, char turnDirection) {
-        String nextOrientation = currentOrientation;
-
-        switch (currentOrientation) {
-            case "WEST":
-                if (turnDirection == 'L') {
-                    nextOrientation = "SOUTH";
-                } else if (turnDirection == 'R') {
-                    nextOrientation = "NORTH";
-                }
-                break;
-            case "EAST":
-                if (turnDirection == 'L') {
-                    nextOrientation = "NORTH";
-                } else if (turnDirection == 'R') {
-                    nextOrientation = "SOUTH";
-                }
-                break;
-            case "NORTH":
-                if (turnDirection == 'L') {
-                    nextOrientation = "WEST";
-                } else if (turnDirection == 'R') {
-                    nextOrientation = "EAST";
-                }
-                break;
-            case "SOUTH":
-                if (turnDirection == 'L') {
-                    nextOrientation = "EAST";
-                } else if (turnDirection == 'R') {
-                    nextOrientation = "WEST";
-                }
-                break;
-            default:
-                nextOrientation = currentOrientation;
-                break;
-        }
-
-        return nextOrientation;
-    }
-
 }
