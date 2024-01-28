@@ -27,39 +27,37 @@ public class Configuration {
         // Sets default filePath to that of the straight.maz.txt
         String filePath = cmd.getOptionValue("i", "examples/straight.maz.txt");
 
-        logger.info("**** Reading the maze from file " + filePath);
+        logger.trace("**** Reading the maze from file " + filePath);
 
         // Parses the maze and converts it into a 2D array
-        maze = MazeCreator.createMaze(filePath);
+        maze = MazeCreator.getCreatedMaze(filePath);
 
         // Executes the appropriate instructions based on whether the user has
         // entered the -p flag
         if (cmd.hasOption("p")) {
             String pathCheck = cmd.getOptionValue("p");
             VerifyPath verifyPath = new VerifyPath(maze, pathCheck);
-            logger.info("**** Path Verification Requested");
-            System.out.println("Path to be verified: " + pathCheck);
+            logger.trace("Path Verification Requested");
 
             try {
-                System.out.println("Verification Result: " + verifyPath.pathVerified());
+                logger.trace("Path verification successful");
+                System.out.println(verifyPath.pathVerificationResult());
             } catch (Exception e) {
-                System.out.println("Verification Result: FAIL");
-                System.out.println("PATH GOES OUT OF BOUNDS");
-                logger.error("**** " + e.getMessage());
+                logger.trace("/!\\ An error has occurred /!\\");
+                System.out.println("incorrect path");
             }
         } else {
             PathFinder pathFinder = new PathFinder(maze);
 
-            logger.info("**** Computing path");
+            logger.trace("**** Computing path");
 
             try {
-                logger.info("**** PATH COMPUTED");
+                logger.trace("PATH COMPUTED");
                 // Display the path to reach the end.
-                String factorPath = pathFinder.factorizedPath();
-                System.out.println("The path is:" + factorPath);
+                System.out.println(pathFinder.getFactorizedPath());
                 
             } catch (Exception e) {
-                logger.info("**** PATH NOT COMPUTED");
+                logger.info("PATH NOT COMPUTED");
             }
         }
     }

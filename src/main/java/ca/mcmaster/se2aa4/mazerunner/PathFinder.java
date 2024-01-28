@@ -11,21 +11,6 @@ public class PathFinder {
         this.maze = inputMaze;
     }
 
-    // Method to move forward
-    private static char forward() {
-        return 'F';
-    }
-
-    // Method to turn right
-    private static char right() {
-        return 'R';
-    }
-
-    // Method to turn left
-    private static char left() {
-        return 'L';
-    }
-
     // Method to determine the canonical path
     private String canonicalPath() {
         int[] startLocation;
@@ -47,30 +32,27 @@ public class PathFinder {
         
         int[] currentLocation = startLocation;
 
-        System.out.println("Entrance [row, column]: " + Arrays.toString(startLocation));
-        System.out.println("Exit [row, column]: " + Arrays.toString(stopLocation));
-
         StringBuilder sb = new StringBuilder();
 
         while (!Arrays.equals(currentLocation, stopLocation)) {
-            int[] checkLoc = Movement.getCheckLocation(orientation, currentLocation);
+            int[] checkLoc = Movement.getNextLocation(orientation, currentLocation);
 
             // If there is a wall, the object turns left, else it moves forward
             // and turns right.
             if (maze[checkLoc[0]][checkLoc[1]] == '#') {
-                orientation = Movement.getNextOrientation(orientation, left());
-                sb.append(left());
+                orientation = Movement.getNextOrientation(orientation, Movement.left());
+                sb.append(Movement.left());
             } else {
                 currentLocation = checkLoc;
-                sb.append(forward());
-                orientation = Movement.getNextOrientation(orientation, right());
-                sb.append(right());
+                sb.append(Movement.forward());
+                orientation = Movement.getNextOrientation(orientation, Movement.right());
+                sb.append(Movement.right());
             }
 
         }
         // Added this as at the end it usually ends at "FR" instead of "FRL",
         // which then can easily be modified to remove the "RL".
-        sb.append(left());
+        sb.append(Movement.left());
 
         String path = sb.toString();
         
@@ -81,12 +63,12 @@ public class PathFinder {
     }
     
     // Method to determine the factorized path
-    public String factorizedPath() {
+    private String factorizedPath() {
         StringBuilder sb = new StringBuilder(" ");
         String canonPath = canonicalPath();
         char currentAlpha = 'F';
         int counter = 0;
-        
+
         // Algorithm to convert the canonical path to a factorized path
         for (int i = 0; i < canonPath.length(); i++) {
             if (canonPath.charAt(i) == currentAlpha) {
@@ -109,7 +91,15 @@ public class PathFinder {
         factorPath = factorPath.replaceAll(" 1F", " F");
         factorPath = factorPath.replaceAll(" 1R", " R");
         factorPath = factorPath.replaceAll(" 1L", " L");
-        
+
+        if (factorPath.charAt(0) == ' ') {
+            factorPath = factorPath.substring(1);
+        }
+
         return factorPath;
+    }
+    
+    public String getFactorizedPath() {
+        return factorizedPath();
     }
 }

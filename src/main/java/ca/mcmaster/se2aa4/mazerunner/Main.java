@@ -8,7 +8,7 @@ public class Main {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
-        logger.info("** Starting Maze Runner");
+        logger.trace("** Starting Maze Runner");
 
         
         try {
@@ -18,6 +18,6 @@ public class Main {
             logger.error("/!\\ An error has occurred /!\\");
         }
 
-        logger.info("** End of MazeRunner");
+        logger.trace("** End of MazeRunner");
     }
 }
