@@ -5,53 +5,29 @@ import java.util.Arrays;
 
 public class PathFinder {
 
-    public PathFinder() {}
+    char[][] maze;
+
+    public PathFinder(char[][] inputMaze) {
+        this.maze = inputMaze;
+    }
 
     // Method to move forward
-    private static String forward() {
-        return "F";
+    private static char forward() {
+        return 'F';
     }
 
     // Method to turn right
-    private static String right() {
-        return "R";
+    private static char right() {
+        return 'R';
     }
 
     // Method to turn left
-    private static String left() {
-        return "L";
-    }
-
-    // Method to determine the location of the entrance
-    public int[] entrance(char[][] maze) {
-        int column = 0;
-        int row = 0;
-
-        while (row < maze.length && maze[row][column] == '#') {
-            row++;
-        }
-
-        int[] entranceCoords = { row, column };
-
-        return entranceCoords;
-    }
-
-    // Method to determine the location of the exit
-    public int[] exit(char[][] maze) {
-        int column = maze[0].length - 1;
-        int row = 0;
-
-        while (row < maze.length && maze[row][column] == '#') {
-            row++;
-        }
-        
-        int[] exitCoords = { row, column };
-
-        return exitCoords;
+    private static char left() {
+        return 'L';
     }
 
     // Method to determine the canonical path
-    private String canonicalPath(char[][] maze) {
+    private String canonicalPath() {
         int[] startLocation;
         int[] stopLocation;
         String orientation;
@@ -60,12 +36,12 @@ public class PathFinder {
         boolean westEast = true;
         
         if (westEast) {
-            startLocation = entrance(maze);
-            stopLocation = exit(maze);
+            startLocation = Openings.getWestEntrance(maze);
+            stopLocation = Openings.getEastExit(maze);
             orientation = "EAST";
         } else {
-            startLocation = exit(maze);
-            stopLocation = entrance(maze);
+            startLocation = Openings.getEastEntrance(maze);
+            stopLocation = Openings.getWestExit(maze);
             orientation = "WEST";
         }
         
@@ -77,17 +53,17 @@ public class PathFinder {
         StringBuilder sb = new StringBuilder();
 
         while (!Arrays.equals(currentLocation, stopLocation)) {
-            int[] checkLoc = CheckLocation(orientation, currentLocation);
+            int[] checkLoc = Movement.getCheckLocation(orientation, currentLocation);
 
             // If there is a wall, the object turns left, else it moves forward
             // and turns right.
             if (maze[checkLoc[0]][checkLoc[1]] == '#') {
-                orientation = nextOrientation(orientation, "LEFT");
+                orientation = Movement.getNextOrientation(orientation, left());
                 sb.append(left());
             } else {
                 currentLocation = checkLoc;
                 sb.append(forward());
-                orientation = nextOrientation(orientation, "RIGHT");
+                orientation = Movement.getNextOrientation(orientation, right());
                 sb.append(right());
             }
 
@@ -105,9 +81,9 @@ public class PathFinder {
     }
     
     // Method to determine the factorized path
-    public String factorizedPath(char[][] maze) {
+    public String factorizedPath() {
         StringBuilder sb = new StringBuilder(" ");
-        String canonPath = canonicalPath(maze);
+        String canonPath = canonicalPath();
         char currentAlpha = 'F';
         int counter = 0;
         
@@ -135,63 +111,5 @@ public class PathFinder {
         factorPath = factorPath.replaceAll(" 1L", " L");
         
         return factorPath;
-    }
-
-    // Method to determine the location to be checked for wall.
-    private int[] CheckLocation(String orientation, int[] currentLocation) {
-        int[] frontLocation = Arrays.copyOf(currentLocation, currentLocation.length);
-
-        if (orientation.equals("EAST")) {
-            frontLocation[1] += 1;
-        } else if (orientation.equals("WEST")) {
-            frontLocation[1] -= 1;
-        } else if (orientation.equals("NORTH")) {
-            frontLocation[0] -= 1;
-        } else {
-            frontLocation[0] += 1;
-        }
-
-        return frontLocation;
-    }
-
-    // Method to determine the next orientation of the object traversing the maze.
-    private String nextOrientation(String currentOrientation, String turnDirection) {
-        String nextOrientation = currentOrientation;
-
-        switch (currentOrientation) {
-            case "WEST":
-                if (turnDirection.equals("LEFT")) {
-                    nextOrientation = "SOUTH";
-                } else if (turnDirection.equals("RIGHT")) {
-                    nextOrientation = "NORTH";
-                }
-                break;
-            case "EAST":
-                if (turnDirection.equals("LEFT")) {
-                    nextOrientation = "NORTH";
-                } else if (turnDirection.equals("RIGHT")) {
-                    nextOrientation = "SOUTH";
-                }
-                break;
-            case "NORTH":
-                if (turnDirection.equals("LEFT")) {
-                    nextOrientation = "WEST";
-                } else if (turnDirection.equals("RIGHT")) {
-                    nextOrientation = "EAST";
-                }
-                break;
-            case "SOUTH":
-                if (turnDirection.equals("LEFT")) {
-                    nextOrientation = "EAST";
-                } else if (turnDirection.equals("RIGHT")) {
-                    nextOrientation = "WEST";
-                }
-                break;
-            default:
-                nextOrientation = currentOrientation;
-                break;
-        }
-
-        return nextOrientation;
     }
 }

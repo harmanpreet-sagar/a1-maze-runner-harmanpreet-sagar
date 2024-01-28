@@ -6,7 +6,7 @@ import java.io.FileReader;
 public class MazeCreator {
 
     // Sub-routine to create the 2D array from the parsed maze
-    public char[][] createMaze(String filePath) throws Exception {
+    public static char[][] createMaze(String filePath) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
 
@@ -16,27 +16,28 @@ public class MazeCreator {
 
         char[][] maze = new char[height][width];
 
-        // Inserts the walls and empty spaces of the maze to a 2D Array
+        // Inserts the walls and empty spaces of the maze to a 2D Array and
+        // prints the maze.
         for (int row = 0; (line = reader.readLine()) != null; row++) {
             for (int column = 0; column < line.length(); column++) {
                 if (line.charAt(column) == '#') {
                     maze[row][column] = '#';
+                    System.out.print("#");
                 } else if (line.charAt(column) == ' ' || line.charAt(column) == '\0') {
                     maze[row][column] = ' ';
+                    System.out.print(" ");
                 }
             }
+            System.out.println();
         }
 
         reader.close();
 
         return maze;
     }
-
-    public MazeCreator(String filePath) throws Exception {
-    }
     
     // Sub-routine to obtain the width of the maze being parsed.
-    private int getWidth(String filePath) throws Exception {
+    private static int getWidth(String filePath) throws Exception {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         int width = 0;
 
@@ -51,7 +52,7 @@ public class MazeCreator {
     }
     
     // Sub-routine to obtain the height of the maze being parsed.
-    private int getHeight(String filePath) throws Exception{
+    private static int getHeight(String filePath) throws Exception{
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         int height = 0;
 

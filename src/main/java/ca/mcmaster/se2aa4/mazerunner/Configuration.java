@@ -1,7 +1,5 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
-import java.util.Arrays;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -32,40 +30,36 @@ public class Configuration {
         logger.info("**** Reading the maze from file " + filePath);
 
         // Parses the maze and converts it into a 2D array
-        MazeCreator mazeCreator = new MazeCreator(filePath);
-        maze = mazeCreator.createMaze(filePath);
-
-        // Prints out the maze.
-        for (char[] rows : maze) {
-            System.out.println(Arrays.toString(rows));
-        }
+        maze = MazeCreator.createMaze(filePath);
 
         // Executes the appropriate instructions based on whether the user has
         // entered the -p flag
         if (cmd.hasOption("p")) {
             String pathCheck = cmd.getOptionValue("p");
             VerifyPath verifyPath = new VerifyPath(maze, pathCheck);
-            logger.info("Path Verification Requested");
+            logger.info("**** Path Verification Requested");
             System.out.println("Path to be verified: " + pathCheck);
 
             try {
                 System.out.println("Verification Result: " + verifyPath.pathVerified());
             } catch (Exception e) {
                 System.out.println("Verification Result: FAIL");
-                logger.error("PATH GOES OUT OF BOUNDS");
+                System.out.println("PATH GOES OUT OF BOUNDS");
+                logger.error("**** " + e.getMessage());
             }
         } else {
-            PathFinder pathFinder = new PathFinder();
+            PathFinder pathFinder = new PathFinder(maze);
 
             logger.info("**** Computing path");
 
             try {
+                logger.info("**** PATH COMPUTED");
                 // Display the path to reach the end.
-                String factorPath = pathFinder.factorizedPath(maze);
+                String factorPath = pathFinder.factorizedPath();
                 System.out.println("The path is:" + factorPath);
                 
             } catch (Exception e) {
-                logger.info("PATH NOT COMPUTED");
+                logger.info("**** PATH NOT COMPUTED");
             }
         }
     }
