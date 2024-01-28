@@ -11,6 +11,8 @@ public class VerifyPath {
     private int[] exitEW;
     private String enterPath;
     
+    MoveInterface move = new Movement();
+
     // Constructor for the VerifyPath class
     public VerifyPath(char[][] maze, String enteredPath) {
         this.parseMaze = maze;
@@ -76,10 +78,10 @@ public class VerifyPath {
         // any walls hit as a result of the entered path.
         for (int index = 0; index < path.length(); index++) {
             char currentChar = path.charAt(index);
-            if (currentChar != Movement.forward()) {
-                startOrientation = Movement.getNextOrientation(startOrientation, currentChar);
+            if (currentChar != move.forward()) {
+                startOrientation = move.getNextOrientation(startOrientation, currentChar);
             } else {
-                currentLocation = Movement.getNextLocation(startOrientation, currentLocation);
+                currentLocation = move.getNextLocation(startOrientation, currentLocation);
                 if (parseMaze[currentLocation[0]][currentLocation[1]] == '#') {
                     status = "FAIL";
                     break;
