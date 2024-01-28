@@ -27,7 +27,7 @@ public class Configuration {
         // Sets default filePath to that of the straight.maz.txt
         String filePath = cmd.getOptionValue("i", "examples/straight.maz.txt");
 
-        logger.info("**** Reading the maze from file " + filePath);
+        logger.trace("**** Reading the maze from file " + filePath);
 
         // Parses the maze and converts it into a 2D array
         maze = MazeCreator.createMaze(filePath);
@@ -37,7 +37,7 @@ public class Configuration {
         if (cmd.hasOption("p")) {
             String pathCheck = cmd.getOptionValue("p");
             VerifyPath verifyPath = new VerifyPath(maze, pathCheck);
-            logger.info("**** Path Verification Requested");
+            logger.trace("**** Path Verification Requested");
             System.out.println("Path to be verified: " + pathCheck);
 
             try {
@@ -50,13 +50,12 @@ public class Configuration {
         } else {
             PathFinder pathFinder = new PathFinder(maze);
 
-            logger.info("**** Computing path");
+            logger.trace("**** Computing path");
 
             try {
-                logger.info("**** PATH COMPUTED");
+                logger.trace("**** PATH COMPUTED");
                 // Display the path to reach the end.
-                String factorPath = pathFinder.factorizedPath();
-                System.out.println("The path is:" + factorPath);
+                System.out.println(pathFinder.factorizedPath());
                 
             } catch (Exception e) {
                 logger.info("**** PATH NOT COMPUTED");
