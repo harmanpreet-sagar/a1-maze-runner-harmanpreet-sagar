@@ -5,13 +5,13 @@ import java.util.Arrays;
 
 public class PathFinder {
 
-    char[][] maze;
+    private char[][] maze;
 
     public PathFinder(char[][] inputMaze) {
         this.maze = inputMaze;
     }
 
-    MoveInterface move = new Movement();
+    Movement move = new Movement();
 
     // Method to determine the canonical path
     private String canonicalPath() {

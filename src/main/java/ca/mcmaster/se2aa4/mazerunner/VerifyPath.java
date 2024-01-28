@@ -11,7 +11,7 @@ public class VerifyPath {
     private int[] exitEW;
     private String enterPath;
     
-    MoveInterface move = new Movement();
+    Movement move = new Movement();
 
     // Constructor for the VerifyPath class
     public VerifyPath(char[][] maze, String enteredPath) {
