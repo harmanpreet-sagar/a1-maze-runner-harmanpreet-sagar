@@ -54,13 +54,13 @@ public class Configuration {
                 logger.error("PATH GOES OUT OF BOUNDS");
             }
         } else {
-            PathFinder pathFinder = new PathFinder();
+            PathFinder pathFinder = new PathFinder(maze);
 
             logger.info("**** Computing path");
 
             try {
                 // Display the path to reach the end.
-                String factorPath = pathFinder.factorizedPath(maze);
+                String factorPath = pathFinder.factorizedPath();
                 System.out.println("The path is:" + factorPath);
                 
             } catch (Exception e) {

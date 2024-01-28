@@ -5,7 +5,11 @@ import java.util.Arrays;
 
 public class PathFinder {
 
-    public PathFinder() {}
+    char[][] maze;
+
+    public PathFinder(char[][] inputMaze) {
+        this.maze = inputMaze;
+    }
 
     // Method to move forward
     private static char forward() {
@@ -23,7 +27,7 @@ public class PathFinder {
     }
 
     // Method to determine the location of the entrance
-    public int[] entrance(char[][] maze) {
+    public int[] entrance() {
         int column = 0;
         int row = 0;
 
@@ -37,7 +41,7 @@ public class PathFinder {
     }
 
     // Method to determine the location of the exit
-    public int[] exit(char[][] maze) {
+    public int[] exit() {
         int column = maze[0].length - 1;
         int row = 0;
 
@@ -51,7 +55,7 @@ public class PathFinder {
     }
 
     // Method to determine the canonical path
-    private String canonicalPath(char[][] maze) {
+    private String canonicalPath() {
         int[] startLocation;
         int[] stopLocation;
         String orientation;
@@ -60,12 +64,12 @@ public class PathFinder {
         boolean westEast = true;
         
         if (westEast) {
-            startLocation = entrance(maze);
-            stopLocation = exit(maze);
+            startLocation = entrance();
+            stopLocation = exit();
             orientation = "EAST";
         } else {
-            startLocation = exit(maze);
-            stopLocation = entrance(maze);
+            startLocation = exit();
+            stopLocation = entrance();
             orientation = "WEST";
         }
         
@@ -105,9 +109,9 @@ public class PathFinder {
     }
     
     // Method to determine the factorized path
-    public String factorizedPath(char[][] maze) {
+    public String factorizedPath() {
         StringBuilder sb = new StringBuilder(" ");
-        String canonPath = canonicalPath(maze);
+        String canonPath = canonicalPath();
         char currentAlpha = 'F';
         int counter = 0;
         
